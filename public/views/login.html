@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Page</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                    <button type="button" class="toggle-btn" onclick="signup()">SignUp</button>
+                    <button type="button" class="toggle-btn" onclick="signin()">SignIn</button>                        
+            </div>
+            <form id="signup" class="input-group" action="/user/signUp" method="POST">
+                <h1 style="text-align: center;">New User?</h1>
+                <p style="text-align: center;">Create an account with your Credentials </p>
+                <br>
+                <hr>
+                <br>
+                <label for="name">Username:</label>
+                <input type="text" class="input-field" id="name" name="name" placeholder="" required>
+                <label for="email">EmailId:</label>
+                <input type="email" class="input-field" id="email" name="email" placeholder="" required>
+                <label for="password">Password:</label>
+                <input type="password" class="input-field" id="password" name="password" placeholder="" required><br><br>
+                <button type="submit" class="submit-btn" id="sugnUpBtn">SignUp</button>
+            </form>
+            
+            <form id="signin"  class="input-group" method="post" onsubmit="return false;">
+                <h1 style="text-align: center;">One of US?</h1>
+                <p style="text-align: center;">LogIn with your Credentials </p>
+                <br>
+                <hr>
+                <br>
+                <label for="email">EmailId:</label>
+                <input type="email" class="input-field" id="loginEmail" name= "loginEmail" placeholder="" required>
+                <label for="password">Password:</label>
+                <input type="password" class="input-field" id="loginPassword" name= "loginPassword" placeholder="" required><br><br>
+                <button type="submit" class="submit-btn" id="loginBtn">SignIn</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+  // Set the initial state to show the SignUp form and highlight the SignUp button
+ var x = document.getElementById("signup");
+ var y = document.getElementById("signin");
+ var z = document.getElementById("btn");
+ x.style.left = "50px";
+ y.style.left = "450px";
+ z.style.left = "0px";
+ 
+ function signup(){
+     x.style.left = "50px";
+     y.style.left = "450px";
+     z.style.left = "0px";
+     // Highlight the SignUp button and unhighlight the SignIn button
+     document.querySelectorAll(".toggle-btn").forEach(function(btn) {
+         btn.classList.remove("active");
+     });
+     document.querySelector(".toggle-btn:first-child").classList.add("active");
+ }
+ 
+ function signin(){
+     x.style.left = "-400px";
+     y.style.left = "50px";
+     z.style.left = "110px";
+     // Highlight the SignIn button and unhighlight the SignUp button
+     document.querySelectorAll(".toggle-btn").forEach(function(btn) {
+         btn.classList.remove("active");
+     });
+     document.querySelector(".toggle-btn:last-child").classList.add("active");
+ }
+ 
+</script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"
+    integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+<script src="/js/login.js"></script>
+</html>
