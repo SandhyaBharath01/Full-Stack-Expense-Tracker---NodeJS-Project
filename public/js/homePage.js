@@ -4,6 +4,8 @@ const categoryBtn = document.querySelector("#categoryBtn");
 const form = document.getElementById("form1");
 const addExpenseBtn = document.getElementById("submitBtn");
 const table = document.getElementById("tbodyId");
+const logoutBtn = document.getElementById("logoutBtn");
+
 
 categoryItems.forEach((item) => {
   item.addEventListener("click", (e) => {
@@ -57,7 +59,7 @@ async function addExpense() {
           date: dateStr,
           category: categoryValue,
           description: descriptionValue,
-          amount: parseInt(amountValue),
+          amount: Number(amountValue),
         },
         { headers: { Authorization: token } }
       )
@@ -118,13 +120,15 @@ async function getAllExpenses() {
 
       let td4 = document.createElement("td");
 
+      // Create delete button
       let deleteBtn = document.createElement("button");
       deleteBtn.className = "editDelete btn btn-danger delete";
-      deleteBtn.appendChild(document.createTextNode("Delete"));
+      deleteBtn.innerHTML = "&#x2715;"; // Set innerHTML to delete symbol
 
+      // Create edit button 
       let editBtn = document.createElement("button");
       editBtn.className = "editDelete btn btn-success edit";
-      editBtn.appendChild(document.createTextNode("Edit"));
+      editBtn.innerHTML = "&#x270e;";
 
       td4.appendChild(deleteBtn);
       td4.appendChild(editBtn);
@@ -286,6 +290,15 @@ async function editExpense(e) {
   }
 }
 
+async function logout() {
+  try {
+    localStorage.clear();
+    window.location.href = "/";
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 addExpenseBtn.addEventListener("click", addExpense);
 document.addEventListener("DOMContentLoaded", getAllExpenses);
 table.addEventListener("click", (e) => {
@@ -294,4 +307,7 @@ table.addEventListener("click", (e) => {
 table.addEventListener("click", (e) => {
   editExpense(e);
 });
+
+logoutBtn.addEventListener("click", logout);
+
 

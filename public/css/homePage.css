@@ -20,11 +20,12 @@ body {
   border-radius: 10px;
   background-color: #c05c10;
   box-shadow: 4px 4px 9px #60310d;
-  margin: 20px 193px;
+  margin: 20px 130px;
 }
+
 #table {
   border-radius: 10px;
-  background-color: #d2eaf7;
+  background-color: rgb(242, 226, 195);
   box-shadow: 4px 4px 9px #b8b8b8;
 }
 #submitBtn {
@@ -40,6 +41,7 @@ body {
 }
 #navigation {
   background-color: #e87116;
+
 }
 #categoryBtn {
   background-color: #522707;
@@ -58,6 +60,11 @@ body {
 }
 #description {
   width: 2000px;
+}
+
+#amount{
+  width: 1500px;
+  
 }
 
 .trStyle {
@@ -91,4 +98,8 @@ body {
 .page-link:hover {
   background-color: #d2eaf7;
   color: #233b64;
+}
+
+#logoutBtn{
+  background-color: wheat;
 }
