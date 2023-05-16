@@ -24,6 +24,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark" id="navigation">
     <div class="container-fluid">
       <a href="/homePage">
+        <img src="/views/euro.png" width="30px" height="30px" id="png" />
       </a>
       <a class="navbar-brand" href="/homePage">Expense Tracker</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -35,8 +36,22 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/homePage">Home</a>
           </li>
+          <li class="nav-item">
+            <a id="reportsLink" class="nav-link active" aria-current="page" href="#" onclick="onClickAlert();">Reports
+              &#128081</a>
+          </li>
+          <li class="nav-item">
+            <a id="leaderboardLink" class="nav-link active" aria-current="page" href="#"
+              onclick="onClickAlert();">LeaderBoard &#128081</a>
+          </li>
         </ul>
-        <button id="logoutBtn" class="topBtn btn py-1" type="button">Log out</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button id="buyPremiumBtn" class="topBtn btn py-1" type="button" data-bs-toggle="tooltip"
+            data-bs-placement="left" title="Premium Membership inclues LeaderBoard & Daily & Monthly Reports">
+            Buy Premium &#128081
+          </button>
+          <button id="logoutBtn" class="topBtn btn py-1" type="button">Log out</button>
+        </div>
       </div>
     </div>
   </nav>
