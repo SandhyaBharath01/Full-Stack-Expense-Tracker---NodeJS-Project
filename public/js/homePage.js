@@ -34,7 +34,7 @@ async function addExpense() {
       alert("Add the Description!");
       window.location.href("/homePage");
     }
-    if (!parseInt(amountValue)) {
+    if (!Number(amountValue)) {
       alert("Please enter the valid amount!");
       window.location.href("/homePage");
     }
