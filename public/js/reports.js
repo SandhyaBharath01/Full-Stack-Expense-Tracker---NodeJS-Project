@@ -191,8 +191,8 @@ async function handler() {
               const tr = document.createElement('tr')
               tr.innerHTML = `
               <th>${i+1}</th>
-              <td>${expense.descriptionValue}</td>
-              <td>${expense.categoryMenu}</td>
+              <td>${expense.description}</td>
+              <td>${expense.category}</td>
               <td>${expense.amount}</td>
               `
               document.querySelector('#monthlyreport').appendChild(tr)

@@ -69,41 +69,41 @@
       </button>
       <ul class="dropdown-menu" id="categoryMenu" aria-labelledby="categoryBtn">
         <li class="dropdown-item" data-value="Mobile & Computers">
-          Food
+          Mobile & Computers
         </li>
         <li class="dropdown-item" data-value="Fashion & Beauty">
-          Travel
+          Fashion & Beauty
         </li>
         <li class="dropdown-item" data-value="Groceries & Pet Supplies">
-          Groceries
+          Groceries & Pet Supplies
         </li>
         <li class="dropdown-item" data-value="Home, Furniture & Appliances">
-          Health
+          Home, Furniture & Appliances
         </li>
-        <!-- <li class="dropdown-item" data-value="Music, Video & Gaming">
+        <li class="dropdown-item" data-value="Music, Video & Gaming">
           Music, Video & Gaming
-        </li> -->
+        </li>
         <li class="dropdown-item" data-value="Books & Education">
-          Education
+          Books & Education
         </li>
-        <!-- <li class="dropdown-item" data-value="Toys, Children & Baby">
+        <li class="dropdown-item" data-value="Toys, Children & Baby">
           Toys, Children & Baby
-        </li> -->
+        </li>
         <li class="dropdown-item" data-value="Payments & Bookings">
-          Payments
+          Payments & Bookings
         </li>
-        <!-- <li class="dropdown-item" data-value="Automotive">Automotive</li> -->
+        <li class="dropdown-item" data-value="Automotive">Automotive</li>
         <li class="dropdown-item" data-value="Office & Professional">
-          Fashion
+          Office & Professional
         </li>
-        <!-- <li class="dropdown-item" data-value="Sports, Outdoor & Travel">
+        <li class="dropdown-item" data-value="Sports, Outdoor & Travel">
           Sports, Outdoor & Travel
         </li>
         <li class="dropdown-item" data-value="Gifting">Gifting</li>
         <li class="dropdown-item" data-value="Bills & EMI's">
           Bills & EMI's
-        </li> -->
-        <!-- <li class="dropdown-item" data-value="Others">Others</li> -->
+        </li>
+        <li class="dropdown-item" data-value="Others">Others</li>
       </ul>
       <input type="hidden" name="category" value="default_value" id="categoryInput" />
     </div>
@@ -152,6 +152,15 @@
           <th scope="col" class="rounded-end"></th>
         </tr>
       </thead>
+      Page Size:
+      <select id="page-size" onchange="onPageSizeChanged()">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select><br>
+      <br>
+      
 
       <!-- ------------------------------------------------------------------------- -->
       <!-- table body -->
@@ -195,6 +204,39 @@
     function onClickAlert() {
       alert("Buy Premium to access this feature.");
     }
+  </script>
+  <script>
+    // Define the gridOptions variable
+    // Define the gridOptions variable
+// Define the gridOptions variable
+// Define the gridOptions variable
+var gridOptions = {
+  pagination: true,
+  paginationPageSize: 10, // Default page size
+};
+
+function onPageSizeChanged() {
+  var value = document.getElementById('page-size').value;
+  gridOptions.paginationPageSize = Number(value); // Update the paginationPageSize property
+
+  // Reload the data with the updated page size
+  fetch('http://localhost:2222/user/getAllExpenses')
+    .then((response) => response.json())
+    .then(function (data) {
+      gridOptions.api.setRowData(data);
+    });
+
+  localStorage.setItem('pageSize', value);
+}
+
+// Retrieve the selected page size from local storage and set it in the dropdown
+var selectedPageSize = localStorage.getItem('pageSize');
+if (selectedPageSize) {
+  document.getElementById('page-size').value = selectedPageSize;
+}
+
+
+
   </script>
 
 </body>

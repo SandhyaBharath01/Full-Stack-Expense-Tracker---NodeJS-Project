@@ -3,6 +3,7 @@ const Expense = require("../models/expenseModel");
 const User = require("../models/userModel");
 const sequelize = require("../util/database");
 
+
 exports.getHomePage = async (req, res, next) => {
   try {
     res.sendFile(
@@ -67,22 +68,23 @@ exports.getAllExpenses = async (req, res, next) => {
 exports.getAllExpensesforPagination = async (req, res, next) => {
   try {
     const pageNo = req.params.page;
-    const limit = 10;
-    const offset = (pageNo - 1) * limit;
+    const selectedPageSize = parseInt(req.query.pageSize) || 5; // Retrieve the selected page size from the query parameter or use a default value
+    const offset = (pageNo - 1) * selectedPageSize;
     const totalExpenses = await Expense.count({
       where: { userId: req.user.id },
     });
-    const totalPages = Math.ceil(totalExpenses / limit);
+    const totalPages = Math.ceil(totalExpenses / selectedPageSize);
     const expenses = await Expense.findAll({
       where: { userId: req.user.id },
       offset: offset,
-      limit: limit,
+      limit: selectedPageSize,
     });
     res.json({ expenses: expenses, totalPages: totalPages });
   } catch (err) {
     console.log(err);
   }
 };
+
 
 exports.deleteExpense = async (req, res, next) => {
   const id = req.params.id;
