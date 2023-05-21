@@ -7,6 +7,10 @@ const monthInput = document.getElementById("month");
 const monthShowBtn = document.getElementById("monthShowBtn");
 const tbodyMonthly = document.getElementById("tbodyMonthlyId");
 const tfootMonthly = document.getElementById("tfootMonthlyId");
+const downloadReportBtn = document.getElementById("downloadReport");
+
+const token = localStorage.getItem("token");
+
 
 const logoutBtn = document.getElementById("logoutBtn");
 
@@ -152,6 +156,111 @@ async function getMonthlyReport(e) {
   }
 }
 
+// document.querySelectorAll('#year').forEach(year => {
+//   year.innerHTML = new Date().getFullYear()
+// })
+// document.querySelector('#month').innerHTML =getMonthName( new Date().getMonth()+1);
+
+// document.querySelector('#download').onclick = downloadReport ;
+
+// handler();
+async function handler() {
+
+  const isPremium = await axios.get(`${url}/user/ispremium`, config)
+  if(!isPremium.data.isPremium){
+      document.querySelector('#download').disabled = true
+  }
+
+
+  const report = await axios.get(`${url}/expenses/user/report`, config)
+  
+  yearExpenses = report.data
+
+  yearExpenses.forEach((monthExpense, index) => {
+          const tr = document.createElement('tr')
+          tr.innerHTML = `
+          <td>${getMonthName(index+1)}</td>
+          <td>${monthExpense.monthTotalExpense}</td>`
+          document.querySelector('#yearlyreport').appendChild(tr)
+  });
+
+  yearExpenses.forEach((expenses, index) => {
+      if(index == new Date().getMonth()){
+          const currentMonthExpense = expenses.expenses
+          currentMonthExpense.forEach((expense, i) => {
+              const tr = document.createElement('tr')
+              tr.innerHTML = `
+              <th>${i+1}</th>
+              <td>${expense.descriptionValue}</td>
+              <td>${expense.categoryMenu}</td>
+              <td>${expense.amount}</td>
+              `
+              document.querySelector('#monthlyreport').appendChild(tr)
+          })
+          
+      }
+  })
+}
+
+
+downloadReportBtn.addEventListener("click", async () => {
+  try {
+    const response = await axios.get("http://localhost:2222/user/getFileHistory", {
+      headers: { Authorization: token },
+    });
+
+    if (response.status === 200 && response.data.files.length > 0) {
+      const fileUrl = response.data.files[0].fileurl; // Assuming only one file is returned
+      const a = document.createElement("a");
+      a.href = fileUrl;
+      a.download = "report.csv"; // Set the desired filename for the downloaded file
+      a.click();
+    } else {
+      alert("No files available for download.");
+    }
+  } catch (error) {
+    console.log(error);
+    alert("Failed to download the report.");
+  }
+});
+
+
+async function showDownloadedFiles() {
+  try {
+    const res = await axios.get("http://localhost:2222/user/getTableData", {
+      headers: { Authorization: token },
+    });
+
+    res.data.forEach((file, index) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <th scope="row">${index + 1}</th>
+        <td>${file.createdAt.slice(0, 10)}</td>
+        <td>
+          <div class="button" id=${file.fileurl}>
+            <button class="btn btn-dark btn-sm" type="submit" id="oldfiledownload">Download</button>
+          </div>
+        </td>
+      `;
+      document.querySelector("#downloadedfiles").appendChild(tr);
+    });
+  } catch (error) {
+    console.log(error);
+    alert("Error retrieving downloaded files. Please try again later.");
+  }
+}
+
+
+document.querySelector('#downloadedfiles').onclick = async(e) => {
+    if(e.target.id == 'oldfiledownload'){
+        const fileUrl = e.target.parentNode.id
+        var a = document.createElement('a');
+        a.href = fileUrl;
+        a.download = "temp.csv"
+        a.click()
+    } 
+}
+
 async function logout() {
   try {
     localStorage.clear();
@@ -164,3 +273,15 @@ async function logout() {
 dateShowBtn.addEventListener("click", getDailyReport);
 monthShowBtn.addEventListener("click", getMonthlyReport);
 logoutBtn.addEventListener("click", logout);
+
+document.addEventListener('DOMContentLoaded', function() {
+  var downloadButton = document.getElementById('downloadReport');
+  if (downloadButton) {
+    downloadButton.addEventListener('click', function() {
+      // Handle the download button click event here
+    });
+  }
+});
+
+downloadReportBtn.addEventListener("click", downloadReport);
+

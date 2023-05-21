@@ -26,9 +26,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark" id="navigation">
       <div class="container-fluid">
-        <a href="/homePage">
-            <img src="/views/euro.png" width="30px" height="30px" id="png" />
-        </a>
+        
         <a class="navbar-brand" href="/homePage">Expense Tracker</a>
         <button
           class="navbar-toggler"
@@ -73,20 +71,49 @@
       </div>
     </nav>
 
+  <!-- Downloaded Files -->
+
+  <div class="button text-center mt-4 mb-3 ">
+    <button class = "btn btn-dark" type = "submit" id = "downloadReport">Download Report</button>
+</div>
+
+  <div class="row">
+    <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-5  mx-lg-auto m-auto">
+      <table class="table text-center caption-top">
+        <caption>Downloaded Files</caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date Downloaded</th>
+            <th scope="col">Download</th>
+          </tr>
+        </thead>
+        <tbody id = "downloadedfiles">
+          <!-- <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>
+              <div class="button">
+              <button class = "btn btn-dark btn-sm" type = "submit" id = "oldfiledownload">download</button>
+              </div>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
     <!-- ----------------------------------------------------------------------- -->
     <!-- Daily Table -->
-
+    <br><u><h3 style="text-align: center;">DAILY REPORTS</h3></u>
     <div
       class="container table-responsive mt-4 p-3 d-flex bd-highlight"
       id="table"
     >
       <!-- ------------------------------------------------------------------------- -->
       <!-- Daily table Form -->
-
+      
       <div class="ps-2 pe-5 py-1 ms-3 me-5 my-1 bd-highlight">
-        <div class="my-1">
-          <h3>DAILY REPORTS</h3>
-        </div>
         <div>
           <form>
             <div class="mb-3">
@@ -130,7 +157,7 @@
 
     <!-- ------------------------------------------------------------------------- -->
     <!-- Monthly Table -->
-
+    <br><u><h3 style="text-align: center;">MONTHLY REPORTS</h3></u>
     <div
       class="container table-responsive mt-4 p-3 d-flex bd-highlight"
       id="table"
@@ -139,9 +166,7 @@
       <!-- Monthly table Form -->
 
       <div class="px-2 py-1 ms-3 me-4 my-1 bd-highlight">
-        <div class="my-1">
-          <h3>MONTHLY REPORTS</h3>
-        </div>
+        
         <div>
           <form>
             <div class="mb-3">
@@ -185,92 +210,10 @@
       </div>
     </div>
 
-    <!-- ------------------------------------------------------------------------- -->
-    <!-- Yearly Table -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js" integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="/js/reports.js"></script>
 
-    <!-- <div
-      class="container table-responsive mt-4 mb-3 p-3 d-flex bd-highlight"
-      id="table"
-    > -->
-      <!-- ------------------------------------------------------------------------- -->
-      <!-- Yearly table Form -->
-
-      <!-- <div class="ps-2 pe-4 py-1 ms-3 me-5 my-1 bd-highlight">
-        <div class="my-1">
-          <h3>YEARLY REPORTS</h3>
-        </div>
-        <div>
-          <form>
-            <div class="mb-3">
-              <label for="year-input" class="form-label"></label>
-              <select id="year-input" name="year-input">
-                <option value="">Select year</option>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <!-- add more options as needed -->
-              <!-- </select>
-            </div>
-            <button type="submit" class="btn btn-primary showBtn">Show</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="p-2 flex-grow-1 bd-highlight">
-        <table id="" class="table table-hover" style="width: 100%"> --> 
-          <!-- ------------------------------------------------------------------------- -->
-          <!-- Yearly table head -->
-
-          <!-- <thead>
-            <tr>
-              <th scope="col">Month</th>
-              <td></td>
-              <th scope="col" style="width: 20%">Amount</th>
-            </tr>
-          </thead> -->
-
-          <!-- ------------------------------------------------------------------------- -->
-          <!-- Yearly table body -->
-
-          <!-- <tbody id="tbodyId">
-            <tr class="trStyle">
-              <td>January</td>
-              <td></td>
-              <td>9000</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr class="trStyle">
-              <td></td>
-              <td id="yearlyTotal">Total</td>
-              <td id="yearlyTotalAmount">9000</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div> -->
-
-    <!-- ---------------------------------------------------------------------------------- -->
-    <!-- scripts -->
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"
-      integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script src="/js/reports.js"></script>
   </body>
 </html>
 
