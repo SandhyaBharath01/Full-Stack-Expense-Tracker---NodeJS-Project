@@ -68,31 +68,30 @@
         Select Category
       </button>
       <ul class="dropdown-menu" id="categoryMenu" aria-labelledby="categoryBtn">
-        <li class="dropdown-item" data-value="Mobile & Computers">
+        <!-- <li class="dropdown-item" data-value="Mobile & Computers">
           Mobile & Computers
-        </li>
+        </li> -->
         <li class="dropdown-item" data-value="Fashion & Beauty">
           Fashion & Beauty
         </li>
         <li class="dropdown-item" data-value="Groceries & Pet Supplies">
-          Groceries & Pet Supplies
-        </li>
+          Groceries
         <li class="dropdown-item" data-value="Home, Furniture & Appliances">
-          Home, Furniture & Appliances
+          Food
         </li>
         <li class="dropdown-item" data-value="Music, Video & Gaming">
-          Music, Video & Gaming
+          Travel
         </li>
         <li class="dropdown-item" data-value="Books & Education">
-          Books & Education
+          Education
         </li>
         <li class="dropdown-item" data-value="Toys, Children & Baby">
-          Toys, Children & Baby
+          Toys
         </li>
-        <li class="dropdown-item" data-value="Payments & Bookings">
+        <!-- <li class="dropdown-item" data-value="Payments & Bookings">
           Payments & Bookings
-        </li>
-        <li class="dropdown-item" data-value="Automotive">Automotive</li>
+        </li> -->
+        <!-- <li class="dropdown-item" data-value="Automotive">Automotive</li>
         <li class="dropdown-item" data-value="Office & Professional">
           Office & Professional
         </li>
@@ -102,7 +101,7 @@
         <li class="dropdown-item" data-value="Gifting">Gifting</li>
         <li class="dropdown-item" data-value="Bills & EMI's">
           Bills & EMI's
-        </li>
+        </li> -->
         <li class="dropdown-item" data-value="Others">Others</li>
       </ul>
       <input type="hidden" name="category" value="default_value" id="categoryInput" />
@@ -152,14 +151,23 @@
           <th scope="col" class="rounded-end"></th>
         </tr>
       </thead>
-      Page Size:
-      <select id="page-size" onchange="onPageSizeChanged()">
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-      </select><br>
-      <br>
+
+      <!-- ------------------------------------------------------------------------- -->
+     <!--rows per page -->
+
+     
+      <!-- <div class="items-controller">
+        <h5>Page Size:</h5>
+        <select id="itemperpage">
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="08">08</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+        <h5>Per Page</h5>
+      </div> -->
+     
       
 
       <!-- ------------------------------------------------------------------------- -->
@@ -185,6 +193,7 @@
         <li class="page-item"><a class="page-link" href="#">3</a></li> -->
       </ul>
     </nav>
+    
   </div>
 
 
@@ -204,39 +213,6 @@
     function onClickAlert() {
       alert("Buy Premium to access this feature.");
     }
-  </script>
-  <script>
-    // Define the gridOptions variable
-    // Define the gridOptions variable
-// Define the gridOptions variable
-// Define the gridOptions variable
-var gridOptions = {
-  pagination: true,
-  paginationPageSize: 10, // Default page size
-};
-
-function onPageSizeChanged() {
-  var value = document.getElementById('page-size').value;
-  gridOptions.paginationPageSize = Number(value); // Update the paginationPageSize property
-
-  // Reload the data with the updated page size
-  fetch('http://localhost:2222/user/getAllExpenses')
-    .then((response) => response.json())
-    .then(function (data) {
-      gridOptions.api.setRowData(data);
-    });
-
-  localStorage.setItem('pageSize', value);
-}
-
-// Retrieve the selected page size from local storage and set it in the dropdown
-var selectedPageSize = localStorage.getItem('pageSize');
-if (selectedPageSize) {
-  document.getElementById('page-size').value = selectedPageSize;
-}
-
-
-
   </script>
 
 </body>
