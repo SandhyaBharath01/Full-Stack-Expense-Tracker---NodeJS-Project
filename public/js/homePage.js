@@ -17,8 +17,6 @@ categoryItems.forEach((item) => {
   });
 });
 
-
-
 async function addExpense() {
   try {
     const category = document.getElementById("categoryBtn");
@@ -30,20 +28,16 @@ async function addExpense() {
 
     if (categoryValue == "Select Category") {
       alert("Select the Category!");
-      window.location.href = "/homePage";
-      return;
+      window.location.href("/homePage");
     }
     if (!descriptionValue) {
       alert("Add the Description!");
-      window.location.href = "/homePage";
-      return;
+      window.location.href("/homePage");
     }
     if (!Number(amountValue)) {
-      alert("Please enter a valid amount!");
-      window.location.href = "/homePage";
-      return;
+      alert("Please enter the valid amount!");
+      window.location.href("/homePage");
     }
-
 
     const currentDate = new Date();
     const day = currentDate.getDate();
@@ -67,7 +61,7 @@ async function addExpense() {
           date: dateStr,
           category: categoryValue,
           description: descriptionValue,
-          amount: Number(amountValue),
+          amount: parseInt(amountValue),
         },
         { headers: { Authorization: token } }
       )
@@ -92,8 +86,7 @@ async function getAllExpenses() {
       "http://localhost:2222/expense/getAllExpenses/1",
       { headers: { Authorization: token } }
     );
-    
-    res.data.expenses.slice(0,expensesPerPage).forEach((expenses) => {
+    res.data.expenses.forEach((expenses) => {
       const id = expenses.id;
       const date = expenses.date;
       const categoryValue = expenses.category;
@@ -145,22 +138,6 @@ async function getAllExpenses() {
       tr.appendChild(td3);
       tr.appendChild(td4);
     });
-    const expensesPerPageInput = document.getElementById("expensesPerPage");
-  const expensesPerPage = Number(expensesPerPageInput.value);
-
-  expensesPerPageInput.addEventListener("change", () => {
-    localStorage.setItem("expensesPerPage", expensesPerPageInput.value);
-    updateExpensesPerPage();
-  });
-
-  function updateExpensesPerPage() {
-    const savedExpensesPerPage = localStorage.getItem("expensesPerPage");
-    if (savedExpensesPerPage) {
-      expensesPerPageInput.value = savedExpensesPerPage;
-    }
-  }
-
-  updateExpensesPerPage();
 
     // ---------------------------------------------------------------------//
 
@@ -180,6 +157,7 @@ async function getAllExpenses() {
     (err) => console.log(err);
   }
 }
+
 async function paginationBtn(e) {
   try {
     const pageNo = e.target.textContent;
@@ -190,13 +168,8 @@ async function paginationBtn(e) {
     );
 
     table.innerHTML = "";
-    const expensesPerPageInput = document.getElementById("expensesPerPage");
-  const expensesPerPage = parseInt(expensesPerPageInput.value);
 
-  const startIndex = (pageNo - 1) * expensesPerPage;
-  const endIndex = pageNo * expensesPerPage;
-
-  res.data.expenses.slice(startIndex, endIndex).forEach((expenses) => {
+    res.data.expenses.forEach((expenses) => {
       const id = expenses.id;
       const date = expenses.date;
       const categoryValue = expenses.category;
@@ -355,7 +328,7 @@ async function isPremiumUser() {
   const res = await axios.get("http://localhost:2222/user/isPremiumUser", {
     headers: { Authorization: token },
   });
-  if (res.data.isPremiumUser === true) {
+  if (res.data.isPremiumUser) {
     buyPremiumBtn.innerHTML = "Premium Member &#x25C6";
     reportsLink.removeAttribute("onclick");
     leaderboardLink.removeAttribute("onclick");
@@ -365,61 +338,6 @@ async function isPremiumUser() {
   } else {
   }
 }
-
-function download() {
-  const button = document.createElement("button")
-  button.textContent = "download"
-  button.classList.add("download")
-  leaderboard.appendChild(button)
-  button.addEventListener('click', () => {
-      //preventDefault()
-      const token = localStorage.getItem("token")
-      axios.get('http://localhost:2222/user/download', { headers: { Autherization: token } })
-          .then((response) => {
-              console.log(response, "this is download resposne")
-              if (response.status === 201) {
-                  //the bcakend is essentially sending a download link
-                  //  which if we open in browser, the file would download
-
-                  var a = document.createElement("a");
-                  a.href = response.data.url;
-                  a.download = 'myexpense.csv';
-                  a.click();
-                  console.log(response.data.url)
-                  showFileHistory()
-              } else {
-                  throw new Error(response.data.message)
-              }
-          })
-          .catch((err) => {
-              console.log(err)
-          });
-  })
-}
-
-async function showFileHistory() {
-  try {
-      const token = localStorage.getItem("token")
-      const allFiles = await axios.get("http://localhost:2222/premium/getfilehistory",
-          { headers: { Autherization: token } })
-      console.log(allFiles.data.files)
-      if (allFiles) {
-          document.getElementById("file-history").style.display = "block";
-          allFiles.data.files.forEach(file => {
-              const li = document.createElement("li")
-              li.innerHTML = `<a href=${file.fileUrl}>${file.fileName}</a>`
-              document.getElementById("file-history-ul").appendChild(li)
-          })
-      } else {
-          const item = document.createElement(li)
-          li.textContent = ("no file download history")
-          document.getElementById("file-history-ul").appendChild(item)
-      }
-  } catch (err) {
-      console.log(err)
-  }
-}
-
 
 async function logout() {
   try {
@@ -434,15 +352,10 @@ buyPremiumBtn.addEventListener("click", buyPremium);
 addExpenseBtn.addEventListener("click", addExpense);
 document.addEventListener("DOMContentLoaded", isPremiumUser);
 document.addEventListener("DOMContentLoaded", getAllExpenses);
-document.addEventListener("DOMContentLoaded", download);
-document.addEventListener("DOMContentLoaded", showFileHistory);
-
 table.addEventListener("click", (e) => {
   deleteExpense(e);
 });
 table.addEventListener("click", (e) => {
   editExpense(e);
 });
-
-window.onload = getAllExpenses;
 logoutBtn.addEventListener("click", logout);
