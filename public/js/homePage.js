@@ -30,16 +30,20 @@ async function addExpense() {
 
     if (categoryValue == "Select Category") {
       alert("Select the Category!");
-      window.location.href("/homePage");
+      window.location.href = "/homePage";
+      return;
     }
     if (!descriptionValue) {
       alert("Add the Description!");
-      window.location.href("/homePage");
+      window.location.href = "/homePage";
+      return;
     }
     if (!Number(amountValue)) {
-      alert("Please enter the valid amount!");
-      window.location.href("/homePage");
+      alert("Please enter a valid amount!");
+      window.location.href = "/homePage";
+      return;
     }
+
 
     const currentDate = new Date();
     const day = currentDate.getDate();
@@ -88,7 +92,8 @@ async function getAllExpenses() {
       "http://localhost:2222/expense/getAllExpenses/1",
       { headers: { Authorization: token } }
     );
-    res.data.expenses.forEach((expenses) => {
+    
+    res.data.expenses.slice(0,expensesPerPage).forEach((expenses) => {
       const id = expenses.id;
       const date = expenses.date;
       const categoryValue = expenses.category;
@@ -140,6 +145,22 @@ async function getAllExpenses() {
       tr.appendChild(td3);
       tr.appendChild(td4);
     });
+    const expensesPerPageInput = document.getElementById("expensesPerPage");
+  const expensesPerPage = Number(expensesPerPageInput.value);
+
+  expensesPerPageInput.addEventListener("change", () => {
+    localStorage.setItem("expensesPerPage", expensesPerPageInput.value);
+    updateExpensesPerPage();
+  });
+
+  function updateExpensesPerPage() {
+    const savedExpensesPerPage = localStorage.getItem("expensesPerPage");
+    if (savedExpensesPerPage) {
+      expensesPerPageInput.value = savedExpensesPerPage;
+    }
+  }
+
+  updateExpensesPerPage();
 
     // ---------------------------------------------------------------------//
 
@@ -159,7 +180,6 @@ async function getAllExpenses() {
     (err) => console.log(err);
   }
 }
-
 async function paginationBtn(e) {
   try {
     const pageNo = e.target.textContent;
@@ -170,8 +190,13 @@ async function paginationBtn(e) {
     );
 
     table.innerHTML = "";
+    const expensesPerPageInput = document.getElementById("expensesPerPage");
+  const expensesPerPage = parseInt(expensesPerPageInput.value);
 
-    res.data.expenses.forEach((expenses) => {
+  const startIndex = (pageNo - 1) * expensesPerPage;
+  const endIndex = pageNo * expensesPerPage;
+
+  res.data.expenses.slice(startIndex, endIndex).forEach((expenses) => {
       const id = expenses.id;
       const date = expenses.date;
       const categoryValue = expenses.category;
@@ -418,4 +443,6 @@ table.addEventListener("click", (e) => {
 table.addEventListener("click", (e) => {
   editExpense(e);
 });
+
+window.onload = getAllExpenses;
 logoutBtn.addEventListener("click", logout);
