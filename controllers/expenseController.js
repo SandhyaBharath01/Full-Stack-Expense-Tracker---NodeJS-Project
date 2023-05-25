@@ -2,6 +2,9 @@ const path = require("path");
 const Expense = require("../models/expenseModel");
 const User = require("../models/userModel");
 const sequelize = require("../util/database");
+const Uploads = require("../models/fileUploadsModel")
+const AWS = require("aws-sdk")
+require("dotenv").config()
 
 exports.getHomePage = async (req, res, next) => {
   try {
@@ -68,14 +71,14 @@ exports.getAllExpensesforPagination = async (req, res, next) => {
   try {
     const pageNo = req.params.page;
     const limit = 10;
-    const offset = (pageNo - 1) * limit;
+    const skip = (pageNo - 1) * limit;
     const totalExpenses = await Expense.count({
       where: { userId: req.user.id },
     });
     const totalPages = Math.ceil(totalExpenses / limit);
     const expenses = await Expense.findAll({
       where: { userId: req.user.id },
-      offset: offset,
+      skip: skip,
       limit: limit,
     });
     res.json({ expenses: expenses, totalPages: totalPages });
@@ -131,3 +134,52 @@ exports.editExpense = async (req, res, next) => {
     console.log(err);
   }
 };
+
+exports.downloadExpense = async (req, res) => {
+  try {
+      const user = req.user
+      const expenses = await user.getExpenses();
+      //console.log(expenses)
+      const stringifiedExpenses = JSON.stringify(expenses)
+      const filename = `${user.id}Expense/${new Date()}.txt`
+      const file = await uploadToS3(stringifiedExpenses, filename)
+
+      const fileUpload = req.user.createUpload({
+          fileUrl: "https://fullstackexpensetracker.s3.eu-north-1.amazonaws.com/AWS+Folder/Expense+wallet+Image.jpg",
+          fileName: filename
+      })
+      res.status(201).json({ url: file })
+  } catch (err) {
+      console.log(err)
+      res.status(500).json({ err: err })
+  }
+}
+
+function uploadToS3(data, filename) {
+
+  const BUCKET_NAME = "fullstackexpensetracker"
+  const IAM_USER_KEY = process.env.IAM_USER_KEY;
+  const IAM_USER_SECRET = process.env.IAM_SECRET_KEY;
+  let s3Bucket = new AWS.S3({
+      accessKeyId: IAM_USER_KEY,
+      secretAccessKey: IAM_USER_SECRET,
+  })
+
+  const params = {
+      Bucket: BUCKET_NAME,
+      Key: filename,
+      Body: data,
+      ACL: 'public-read'
+  }
+  return new Promise((resolve, reject) => {
+      s3Bucket.upload(params, (err, s3response) => {
+          if (err) {
+              console.log(err)
+              reject(err);
+          } else {
+              console.log(s3response)
+              resolve(s3response.Location);
+          }
+      })
+  })
+}	

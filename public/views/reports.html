@@ -13,6 +13,7 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"
@@ -70,39 +71,10 @@
         </div>
       </div>
     </nav>
-
-  <!-- Downloaded Files -->
-
-  <div class="button text-center mt-4 mb-3 ">
-    <button class = "btn btn-dark" type = "submit" id = "downloadReport">Download Report</button>
-</div>
-
-  <div class="row">
-    <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-5  mx-lg-auto m-auto">
-      <table class="table text-center caption-top">
-        <caption>Downloaded Files</caption>
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Date Downloaded</th>
-            <th scope="col">Download</th>
-          </tr>
-        </thead>
-        <tbody id = "downloadedfiles">
-          <!-- <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>
-              <div class="button">
-              <button class = "btn btn-dark btn-sm" type = "submit" id = "oldfiledownload">download</button>
-              </div>
-            </td>
-          </tr> -->
-        </tbody>
-      </table>
-    </div>
+    <!-- Download button -->
+    <div class="button text-center mt-4 mb-3 ">
+      <button class = "btn btn-dark" type = "submit" id = "download">Download Report</button>
   </div>
-
     <!-- ----------------------------------------------------------------------- -->
     <!-- Daily Table -->
     <br><u><h3 style="text-align: center;">DAILY REPORTS</h3></u>
@@ -210,10 +182,49 @@
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js" integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-<script src="/js/reports.js"></script>
+      <!-- Show Downloaded Files -->
 
+      <div class="row">
+        <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-5  mx-lg-auto m-auto">
+      <table class="table text-center caption-top">
+        <caption>Downloaded Files</caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date Downloaded</th>
+            <th scope="col">Download</th>
+          </tr>
+        </thead>
+        <tbody id = "downloadedfiles">
+          <!-- <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>
+              <div class="button">
+              <button class = "btn btn-dark btn-sm" type = "submit" id = "oldfiledownload">download</button>
+              </div>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    <!-- ---------------------------------------------------------------------------------- -->
+    <!-- scripts -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"
+      integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/js/reports.js"></script>
   </body>
 </html>
 

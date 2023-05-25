@@ -26,6 +26,7 @@ const expenseRouter = require("./router/expenseRouter");
 const purchaseMembershipRouter = require("./router/purchaseMembershipRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
 const reportsRouter = require("./router/reportsRouter");
+const Uploads = require("./models/fileUploadsModel")
 
 const User = require("./models/userModel");
 const Expense = require("./models/expenseModel");
@@ -53,6 +54,9 @@ Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(Uploads)
+Uploads.belongsTo(User)
 
 
 

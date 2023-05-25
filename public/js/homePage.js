@@ -17,6 +17,8 @@ categoryItems.forEach((item) => {
   });
 });
 
+
+
 async function addExpense() {
   try {
     const category = document.getElementById("categoryBtn");
@@ -61,7 +63,7 @@ async function addExpense() {
           date: dateStr,
           category: categoryValue,
           description: descriptionValue,
-          amount: parseInt(amountValue),
+          amount: Number(amountValue),
         },
         { headers: { Authorization: token } }
       )
@@ -328,7 +330,7 @@ async function isPremiumUser() {
   const res = await axios.get("http://localhost:2222/user/isPremiumUser", {
     headers: { Authorization: token },
   });
-  if (res.data.isPremiumUser) {
+  if (res.data.isPremiumUser === true) {
     buyPremiumBtn.innerHTML = "Premium Member &#x25C6";
     reportsLink.removeAttribute("onclick");
     leaderboardLink.removeAttribute("onclick");
@@ -338,6 +340,61 @@ async function isPremiumUser() {
   } else {
   }
 }
+
+function download() {
+  const button = document.createElement("button")
+  button.textContent = "download"
+  button.classList.add("download")
+  leaderboard.appendChild(button)
+  button.addEventListener('click', () => {
+      //preventDefault()
+      const token = localStorage.getItem("token")
+      axios.get('http://localhost:2222/user/download', { headers: { Autherization: token } })
+          .then((response) => {
+              console.log(response, "this is download resposne")
+              if (response.status === 201) {
+                  //the bcakend is essentially sending a download link
+                  //  which if we open in browser, the file would download
+
+                  var a = document.createElement("a");
+                  a.href = response.data.url;
+                  a.download = 'myexpense.csv';
+                  a.click();
+                  console.log(response.data.url)
+                  showFileHistory()
+              } else {
+                  throw new Error(response.data.message)
+              }
+          })
+          .catch((err) => {
+              console.log(err)
+          });
+  })
+}
+
+async function showFileHistory() {
+  try {
+      const token = localStorage.getItem("token")
+      const allFiles = await axios.get("http://localhost:2222/premium/getfilehistory",
+          { headers: { Autherization: token } })
+      console.log(allFiles.data.files)
+      if (allFiles) {
+          document.getElementById("file-history").style.display = "block";
+          allFiles.data.files.forEach(file => {
+              const li = document.createElement("li")
+              li.innerHTML = `<a href=${file.fileUrl}>${file.fileName}</a>`
+              document.getElementById("file-history-ul").appendChild(li)
+          })
+      } else {
+          const item = document.createElement(li)
+          li.textContent = ("no file download history")
+          document.getElementById("file-history-ul").appendChild(item)
+      }
+  } catch (err) {
+      console.log(err)
+  }
+}
+
 
 async function logout() {
   try {
@@ -352,6 +409,9 @@ buyPremiumBtn.addEventListener("click", buyPremium);
 addExpenseBtn.addEventListener("click", addExpense);
 document.addEventListener("DOMContentLoaded", isPremiumUser);
 document.addEventListener("DOMContentLoaded", getAllExpenses);
+document.addEventListener("DOMContentLoaded", download);
+document.addEventListener("DOMContentLoaded", showFileHistory);
+
 table.addEventListener("click", (e) => {
   deleteExpense(e);
 });
