@@ -12,7 +12,7 @@ function login() {
   };
 
   axios
-    .post("http://localhost:2222/user/login", loginDetails)
+    .post("http://13.49.241.172/user/login", loginDetails)
     .then((result) => {
       alert(result.data.message);
       localStorage.setItem("token", result.data.token);
