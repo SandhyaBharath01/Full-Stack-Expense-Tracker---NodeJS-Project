@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sequelize = require("../util/database");
 
+
 function generateAccessToken(id, email) {
   return jwt.sign({ userId: id, email: email }, process.env.TOKEN);
 }
