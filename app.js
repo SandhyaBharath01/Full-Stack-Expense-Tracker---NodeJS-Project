@@ -58,6 +58,7 @@ Order.belongsTo(User);
 User.hasMany(Uploads)
 Uploads.belongsTo(User)
 
+// need to write app.use and console statement
 
 
 sequelize
