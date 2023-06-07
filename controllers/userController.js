@@ -75,11 +75,10 @@ const postUserLogin = async (req, res, next) => {
               .json({ success: false, message: "Something went Wrong!" });
           }
           if (result == true) {
-            let dbid = user.id;
             return res.status(200).json({
               success: true,
               message: "Login Successful!",
-              token: generateAccessToken(dbid),
+              token: generateAccessToken(user.id, user.email),
             });
           } else {
             return res.status(401).json({
