@@ -166,7 +166,6 @@ async function paginationBtn(e) {
       `http://localhost:2222/expense/getAllExpenses/${pageNo}`,
       { headers: { Authorization: token } }
     );
-
     table.innerHTML = "";
 
     res.data.expenses.forEach((expenses) => {

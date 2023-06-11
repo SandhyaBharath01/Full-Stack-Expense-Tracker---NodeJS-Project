@@ -8,6 +8,7 @@ const fs = require("fs");
 const cors = require("cors");
 app.use(cors());
 
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -58,6 +59,7 @@ Order.belongsTo(User);
 User.hasMany(Uploads)
 Uploads.belongsTo(User)
 
+// need to write app.use and console statement
 
 
 sequelize
